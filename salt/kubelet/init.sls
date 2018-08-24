@@ -14,6 +14,9 @@ include:
 {% if "kube-master" in salt['grains.get']('roles', []) %}
       nodeLabels: "node-role.kubernetes.io/master="
       nodeTaints: "node-role.kubernetes.io/master=:NoSchedule"
+{% elif "kube-minion" in salt['grains.get']('roles', []) %}
+      nodeLabels: "node-role.kubernetes.io/worker="
+      nodeTaints: ""
 {% else %}
       nodeLabels: ""
       nodeTaints: ""

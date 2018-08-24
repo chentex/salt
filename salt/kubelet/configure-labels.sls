@@ -10,6 +10,10 @@ include:
 {{ kubectl("set-master-label",
            "label node --overwrite " + grains['nodename'] + " node-role.kubernetes.io/master=",
            onlyif="/bin/true") }}
+{% elif "kube-minion" in salt['grains.get']('roles', []) %}
+{{ kubectl("set-worker-label",
+           "label node --overwrite " + grains['nodename'] + " node-role.kubernetes.io/worker=",
+           onlyif="/bin/true") }}
 {% else %}
 {{ kubectl("clear-master-label",
            "label node --overwrite " + grains['nodename'] + " node-role.kubernetes.io/master-",
